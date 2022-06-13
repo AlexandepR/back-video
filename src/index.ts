@@ -27,7 +27,7 @@ app.get('videos/:videoId', (req: Request, res: Response) => {
     if (!video) {
         res.sendStatus(404)
     } else {
-        res.json(video)
+        res.send(video)
     }
 })
 app.post('/videos', (req: Request, res: Response) => {

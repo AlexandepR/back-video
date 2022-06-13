@@ -55,12 +55,18 @@ app.post('/videos', (req: Request, res: Response) => {
 app.put('/videos/:videoId', (req: Request, res: Response) => {
     let title = req.body.title
     if (!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
+        // res.status(400).send({
+        //     errorsMessages: [{
+        //         message: "Incorrect title",
+        //         field: "title",
+        //     }],
+        //     resultCode: '1'
+        // })
         res.status(400).send({
             errorsMessages: [{
                 message: "Incorrect title",
-                field: "title",
+                field: "title"
             }],
-            resultCode: '1'
         })
         return;
     }

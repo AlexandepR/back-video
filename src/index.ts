@@ -25,11 +25,11 @@ app.get('/videos/:videoId', (req: Request, res: Response) => {
     const id = +req.params.videoId;
     const video = videos.find(v => v.id === id)
     if (video) {
-        // res.sendStatus(404)
+
         res.send(video)
     } else {
-        res.send(404)
-
+        res.sendStatus(404)
+        // res.send(404)
     }
 })
 app.post('/videos', (req: Request, res: Response) => {
@@ -37,10 +37,9 @@ app.post('/videos', (req: Request, res: Response) => {
     if (!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
         res.status(400).send({
             errorsMessages: [{
-                "message": "Incorrect title",
-                "field": "title",
+                message: "Incorrect title",
+                field: "title"
             }],
-            resultCode: '1'
         })
         return;
     }
@@ -55,13 +54,6 @@ app.post('/videos', (req: Request, res: Response) => {
 app.put('/videos/:videoId', (req: Request, res: Response) => {
     let title = req.body.title
     if (!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
-        // res.status(400).send({
-        //     errorsMessages: [{
-        //         message: "Incorrect title",
-        //         field: "title",
-        //     }],
-        //     resultCode: '1'
-        // })
         res.status(400).send({
             errorsMessages: [{
                 message: "Incorrect title",

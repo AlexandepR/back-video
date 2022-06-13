@@ -64,7 +64,7 @@ app.put('/videos/:videoId', (req: Request, res: Response) => {
         })
         return;
     }
-    const id = +req.params.id
+    const id = +req.params.videoId
     const video = videos.find(v => v.id === id)
     if (video) {
         video.title = title;

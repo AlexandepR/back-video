@@ -18,7 +18,7 @@ let videos = [
     {id: 5, title: 'About JS - 05', author: 'it-incubator.eu'},
 ]
 app.get('/', (req:Request, res:Response) => {
-    res.send('Hello world!!!!!!!')
+    res.send('Hello world!')
     // res.json(videos)
 })
 app.get('/videos',(req:Request, res: Response) => {

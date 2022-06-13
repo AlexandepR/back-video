@@ -18,12 +18,10 @@ let videos = [
     {id: 5, title: 'About JS - 05', author: 'it-incubator.eu'},
 ]
 app.get('/', (req:Request, res:Response) => {
-    res.send('Hello world!')
-    // res.json(videos)
+    res.send(videos)
+    res.status(200)
 })
-app.get('/videos',(req:Request, res: Response) => {
 
-})
 app.get('videos/:videoId', (req: Request, res: Response) => {
     const id = +req.params.videoId;
     const video = videos.find(v => v.id === id)

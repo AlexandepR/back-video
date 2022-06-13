@@ -1,13 +1,10 @@
 import express, {Request, Response} from 'express'
 import cors from 'cors'
-// import bodyParser from "body-parser";
+import bodyParser from "body-parser";
 
-
-// const express = require('express')
 const app = express()
 app.use(cors())
-// const jsonBodyMiddleware = bodyParser.json()
-// app.use(jsonBodyMiddleware)
+app.use(bodyParser.json())
 const port = process.env.PORT || 5000
 
 let videos = [

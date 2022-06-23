@@ -1,7 +1,7 @@
 import {NextFunction, Request, Response} from "express";
 import {validationResult} from "express-validator";
 
-let blackListIp = [{id:1,ip: '94.43.162.216'}]
+
 
 export let middleware = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req)
@@ -18,9 +18,4 @@ export let middleware = (req: Request, res: Response, next: NextFunction) => {
     } else {
         next()
     }
-
-        // if( blackListIp.find( blackIp => req.ip === blackIp.ip)) {
-        //     return false
-        // }
-
 }

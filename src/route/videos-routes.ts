@@ -1,14 +1,18 @@
 import {Request, Response, Router} from 'express';
 import {videos} from "../repositories/db";
-
 import {videosRepository} from "../repositories/videos-repository";
 import {body} from "express-validator";
 import {middleware} from "../middleware/middleware";
+import net from "net";
+import {ipMiddleware} from "../middleware/ipMiddleware";
 
 export const videosRouter = Router({})
 
 export const titleValidation = body('title')
     .isLength({min: 0, max: 40}).isString().trim().withMessage('Title invalid')
+
+
+
 
 
 videosRouter.get('', (req: Request, res: Response) => {
@@ -20,6 +24,8 @@ videosRouter.get('', (req: Request, res: Response) => {
         res.sendStatus(400)
     }
 })
+
+
 
 videosRouter.get('/:id', (req: Request, res: Response) => {
     // let ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress

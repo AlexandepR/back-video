@@ -14,9 +14,11 @@ export let middleware = (req: Request, res: Response, next: NextFunction) => {
         // })
     if (!errors.isEmpty()) {
         res.status(400)
+        // res.json({ resultCode: 1, errors: errors.array() })
         res.send({
             errorsMessages
         })
+
         return
     } else {
         next()

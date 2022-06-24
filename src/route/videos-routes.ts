@@ -1,22 +1,36 @@
 import {Request, Response, Router} from 'express';
 import {videos} from "../repositories/db";
 import {videosRepository} from "../repositories/videos-repository";
-import {body} from "express-validator";
+import {body, validationResult} from "express-validator";
 import {middleware} from "../middleware/middleware";
 import net from "net";
 import {ipMiddleware} from "../middleware/ipMiddleware";
 import {contentTypeMiddleware} from "../middleware/contentTypeMiddleware";
+import authMiddleware from "../middleware/authMiddleware";
 
 export const videosRouter = Router({})
 
 export const titleValidation = body('title')
-    .isLength({min: 0, max: 40}).isString().trim().withMessage('Title invalid')
+    .isLength({min: 5, max: 40}).isString().trim().withMessage('Title invalid')
 
 
 
 
 
-videosRouter.get('', (req: Request, res: Response) => {
+videosRouter.get('',
+    authMiddleware,
+    body('name')
+        .isLength({max: 15})
+        .withMessage('Max 15 symbols')
+        .matches(/^[\w ]*$/)
+        .withMessage('Only letters/numbers - and whitespace'),
+    (req: Request, res: Response) => {
+
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        return res.status(400).json({ resultCode: 1, errors: errors.array() })
+    }
+
     const videos = videosRepository.getVideos()
     if (videos) {
         res.status(200).send(videos)
@@ -40,7 +54,11 @@ videosRouter.get('/:id', (req: Request, res: Response) => {
     }
 })
 
-videosRouter.post('/', contentTypeMiddleware,titleValidation,middleware, (req: Request, res: Response) => {
+videosRouter.post('/',
+    // contentTypeMiddleware,
+    titleValidation,
+    middleware,
+    (req: Request, res: Response) => {
     const newVideo = videosRepository.createVideo(req.body.title)
     if (!newVideo) {
         res.status(400).send(

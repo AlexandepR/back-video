@@ -17,7 +17,7 @@ const app = express()
 
 app.use(cors())
 app.use(bodyParser.json())
-// app.use(authMiddleware)
+app.use(authMiddleware)
 
 // app.use(counterMiddleware)
 // app.use(contentTypeMiddleware('application/json'))

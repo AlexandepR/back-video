@@ -8,6 +8,10 @@ export let middleware = (req: Request, res: Response, next: NextFunction) => {
         message: err.msg,
         field: err.param
     }))
+        // errorsMessages = errorsMessages.filter((err, index) => {
+        //     const findIndex = errorsMessages.findIndex((isError => isError.field === err.field))
+        //     return findIndex === index
+        // })
     if (!errors.isEmpty()) {
         res.status(400)
         res.send({

@@ -7,5 +7,5 @@ export let videos = [
 ]
 export let blackListIp = [
     {id:1, ip: '94.43.162.216'},
-    {id:2, ip:'::ffff:127.0.0.1'}
+    // {id:2, ip:'::ffff:127.0.0.1'}
 ]

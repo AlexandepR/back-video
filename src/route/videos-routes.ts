@@ -5,6 +5,7 @@ import {body} from "express-validator";
 import {middleware} from "../middleware/middleware";
 import net from "net";
 import {ipMiddleware} from "../middleware/ipMiddleware";
+import {contentTypeMiddleware} from "../middleware/contentTypeMiddleware";
 
 export const videosRouter = Router({})
 
@@ -39,7 +40,7 @@ videosRouter.get('/:id', (req: Request, res: Response) => {
     }
 })
 
-videosRouter.post('/', titleValidation,middleware, (req: Request, res: Response) => {
+videosRouter.post('/', contentTypeMiddleware,titleValidation,middleware, (req: Request, res: Response) => {
     const newVideo = videosRepository.createVideo(req.body.title)
     if (!newVideo) {
         res.status(400).send(

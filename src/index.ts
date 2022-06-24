@@ -6,16 +6,24 @@ import * as net from "net";
 import {ipMiddleware} from "./middleware/ipMiddleware";
 import {videosRepository} from "./repositories/videos-repository";
 import {counterMiddleware} from "./middleware/counterMiddleware";
+import {contentTypeMiddleware} from "./middleware/contentTypeMiddleware";
+import authMiddleware from "./middleware/authMiddleware";
 // import requestIp from 'request-ip'
 
 // app.set('trust proxy', true)
 
 
 const app = express()
-app.use(counterMiddleware)
-app.use(ipMiddleware)
+
 app.use(cors())
 app.use(bodyParser.json())
+// app.use(authMiddleware)
+
+// app.use(counterMiddleware)
+// app.use(contentTypeMiddleware('application/json'))
+// app.use(ipMiddleware)
+
+
 const port = process.env.PORT || 5000
 
 app.use('/videos', videosRouter)

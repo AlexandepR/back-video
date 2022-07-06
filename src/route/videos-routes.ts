@@ -11,7 +11,7 @@ import authMiddleware from "../middleware/authMiddleware";
 export const videosRouter = Router({})
 
 export const titleValidation = body('title')
-    .isLength({min: 5, max: 40}).isString().trim().withMessage('Title invalid')
+    .isLength({min: 5, max: 40}).withMessage('Max 40 symbols').isString().trim().withMessage('Title invalid')
 
 
 
@@ -26,10 +26,10 @@ videosRouter.get('',
         .withMessage('Only letters/numbers - and whitespace'),
     (req: Request, res: Response) => {
 
-    const errors = validationResult(req);
-    if(!errors.isEmpty()) {
-        return res.status(400).json({ resultCode: 1, errors: errors.array() })
-    }
+    // const errors = validationResult(req);
+    // if(!errors.isEmpty()) {
+    //     return res.status(400).json({ resultCode: 1, errors: errors.array() })
+    // }
 
     const videos = videosRepository.getVideos()
     if (videos) {

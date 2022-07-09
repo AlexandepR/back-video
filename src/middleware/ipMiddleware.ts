@@ -8,7 +8,7 @@ export const ipMiddleware = function (req: Request, res: Response, next: NextFun
     const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
     const findIp = blackListIp.find(blackIp => blackIp.ip === ip)
     if (findIp) {
-        res.sendStatus(404)
+        res.sendStatus(403)
         return
     }
 

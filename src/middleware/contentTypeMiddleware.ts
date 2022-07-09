@@ -7,6 +7,7 @@ export const contentTypeMiddleware = (contentType: string) => (
 
     const content = req.headers['content-type']
     if (content !== contentType) {
+    // if (content !== "application/json") {
         res.status(400).send('Bad content type')
         return
     }

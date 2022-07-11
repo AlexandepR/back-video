@@ -24,14 +24,14 @@ videosRouter.get('',
         .withMessage('Max 15 symbols')
         .matches(/^[\w ]*$/)
         .withMessage('Only letters/numbers - and whitespace'),
-    (req: Request, res: Response) => {
+    async (req: Request, res: Response) => {
 
     // const errors = validationResult(req);
     // if(!errors.isEmpty()) {
     //     return res.status(400).json({ resultCode: 1, errors: errors.array() })
     // }
 
-    const videos = videosRepository.getVideos()
+    const videos = await videosRepository.getVideos()
     if (videos) {
         res.status(200).send(videos)
         res.send(req.ip)
@@ -42,11 +42,11 @@ videosRouter.get('',
 
 
 
-videosRouter.get('/:id', (req: Request, res: Response) => {
+videosRouter.get('/:id', async (req: Request, res: Response) => {
     // let ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
     // res.send(ip)
 
-    const video = videosRepository.getVideoById(+req.params.id)
+    const video = await videosRepository.getVideoById(+req.params.id)
     if (video) {
         res.status(200).send(video)
     } else {
@@ -58,8 +58,8 @@ videosRouter.post('/',
     // contentTypeMiddleware,
     titleValidation,
     middleware,
-    (req: Request, res: Response) => {
-    const newVideo = videosRepository.createVideo(req.body.title)
+    async (req: Request, res: Response) => {
+    const newVideo = await videosRepository.createVideo(req.body.title)
     if (!newVideo) {
         res.status(400).send(
             {
@@ -74,8 +74,8 @@ videosRouter.post('/',
     }
 })
 
-videosRouter.put('/:id', titleValidation, middleware, (req: Request, res: Response) => {
-    const video = videosRepository.updateVideoById(+req.params.id,req.body.title)
+videosRouter.put('/:id', titleValidation, middleware, async (req: Request, res: Response) => {
+    const video = await videosRepository.updateVideoById(+req.params.id,req.body.title)
     if (!video) {
         res.status(400).send({
             errorsMessages: [{
@@ -89,8 +89,8 @@ videosRouter.put('/:id', titleValidation, middleware, (req: Request, res: Respon
     }
 })
 
-videosRouter.delete('/id', (req:Request, res:Response) => {
-    const isDeleted = videosRepository.deleteVideoById(+req.params.id)
+videosRouter.delete('/id', async (req:Request, res:Response) => {
+    const isDeleted = await videosRepository.deleteVideoById(+req.params.id)
     if (isDeleted) {
         res.send(204)
     } else {

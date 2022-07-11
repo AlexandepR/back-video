@@ -1,20 +1,25 @@
 import {Request, Response} from "express";
 import {videos} from "./db";
 
+export type VideosType = {
+    id: number
+    title: string
+    author: string
+}
 
 export const videosRepository = {
-    getVideos() {
+    async getVideos(): Promise<VideosType[]> {
         return videos
     },
-    getVideoById(id:number) {
+    async getVideoById(id:number): Promise<VideosType | null> {
         const video = videos.find(v => v.id === id)
         if (video) {
             return video
         } else {
-            return false
+            return null
         }
     },
-    deleteVideoById(id: number) {
+    async deleteVideoById(id: number): Promise<VideosType | boolean> {
         for (let i = 0; i < videos.length; i++) {
             if (videos[i].id === id) {
                 videos.splice(i,1)
@@ -23,16 +28,17 @@ export const videosRepository = {
         }
         return false
     },
-    updateVideoById(id: number, title: string) {
+    async updateVideoById(id: number, title: string): Promise <boolean> {
         const video = videos.find(v => v.id === id)
         if (video) {
             video.title = title;
-            return video
+            return true
+            // return video
         } else {
             return false
         }
     },
-    createVideo(title: string) {
+    async createVideo(title: string): Promise<VideosType | boolean> {
         const newVideo = {
             id: +(new Date()),
             title: title,
